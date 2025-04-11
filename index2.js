@@ -38,7 +38,8 @@ app.get('/api/todo/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const todo = todos.find(t => t.id === id);
     if (!todo) {
-        return res.status(404).json({ message: 'Todo not found' });
+        res.status(404).json({ message: 'Todo not found' });
+        return;
     }
     res.json(todo);
 });
@@ -46,7 +47,8 @@ app.get('/api/todo/:id', (req, res) => {
 app.post('/api/todo', (req, res) => {
     const { title, completed = false } = req.body;
     if (typeof title !== 'string') {
-        return res.status(400).json({ message: 'Invalid title' });
+        res.status(400).json({ message: 'Invalid title' });
+        return;
     }
     const newTodo = {
         id: idCounter++,
@@ -61,7 +63,8 @@ app.put('/api/todo/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const todo = todos.find(t => t.id === id);
     if (!todo) {
-        return res.status(404).json({ message: 'Todo not found' });
+        res.status(404).json({ message: 'Todo not found' });
+        return;
     }
     const { title, completed } = req.body;
     if (typeof title === 'string') {
@@ -77,7 +80,8 @@ app.delete('/api/todo/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const index = todos.findIndex(t => t.id === id);
     if (index === -1) {
-        return res.status(404).json({ message: 'Todo not found' });
+        res.status(404).json({ message: 'Todo not found' });
+        return;
     }
     todos.splice(index, 1);
     res.status(204).send();

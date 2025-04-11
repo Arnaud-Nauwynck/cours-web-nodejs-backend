@@ -43,28 +43,30 @@ app.get('/index.html', (req, res) => {
 
 
 // Get all todos
-app.get('/api/todo', (req: Request, res: Response) => {
+app.get('/api/todo', (req: Request, res: Response): undefined => {
   res.json(todos);
 });
 
 // Get a todo by ID
-app.get('/api/todo/:id', (req: Request, res: Response) => {
+app.get('/api/todo/:id', (req: Request, res: Response): undefined => {
   const id = parseInt(req.params.id);
   const todo = todos.find(t => t.id === id);
 
   if (!todo) {
-    return res.status(404).json({ message: 'Todo not found' });
+    res.status(404).json({ message: 'Todo not found' });
+    return;
   }
 
   res.json(todo);
 });
 
 // Create a new todo
-app.post('/api/todo', (req: Request, res: Response) => {
+app.post('/api/todo', (req: Request, res: Response): undefined => {
   const { title, completed = false } = req.body;
 
   if (typeof title !== 'string') {
-    return res.status(400).json({ message: 'Invalid title' });
+    res.status(400).json({ message: 'Invalid title' });
+    return;
   }
 
   const newTodo: Todo = {
@@ -78,12 +80,13 @@ app.post('/api/todo', (req: Request, res: Response) => {
 });
 
 // Update a todo
-app.put('/api/todo/:id', (req: Request, res: Response) => {
+app.put('/api/todo/:id', (req: Request, res: Response): undefined => {
   const id = parseInt(req.params.id);
   const todo = todos.find(t => t.id === id);
 
   if (!todo) {
-    return res.status(404).json({ message: 'Todo not found' });
+    res.status(404).json({ message: 'Todo not found' });
+    return;
   }
 
   const { title, completed } = req.body;
@@ -100,12 +103,13 @@ app.put('/api/todo/:id', (req: Request, res: Response) => {
 });
 
 // Delete a todo
-app.delete('/api/todo/:id', (req: Request, res: Response) => {
+app.delete('/api/todo/:id', (req: Request, res: Response): undefined => {
   const id = parseInt(req.params.id);
   const index = todos.findIndex(t => t.id === id);
 
   if (index === -1) {
-    return res.status(404).json({ message: 'Todo not found' });
+    res.status(404).json({ message: 'Todo not found' });
+    return;
   }
 
   todos.splice(index, 1);
