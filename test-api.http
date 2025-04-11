@@ -1,0 +1,14 @@
+### GET /api/todo
+GET http://localhost:3000/api/todo
+Accept: application/json
+
+### POST /api/todo
+GET http://localhost:3000/api/todo
+Content-Type: application/json
+Accept: application/json
+
+{
+  "title": "Learn IntelliJ Http Request files",
+  "completed": true
+}
+###
