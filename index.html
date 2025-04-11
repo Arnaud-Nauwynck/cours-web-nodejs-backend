@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo Fetch Example</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #f0f0f0;
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+<h1>Todo List</h1>
+<ul id="todo-list">
+    <!-- Todos will be inserted here -->
+</ul>
+
+<script>
+    async function fetchTodos() {
+        try {
+            const response = await fetch("/api/todo");
+            if (!response.ok) throw new Error("Failed to fetch");
+
+            const todos = await response.json();
+            const listElement = document.getElementById("todo-list");
+
+            console.log('fetch response', todos);
+
+            listElement.innerHTML = ""; // Clear existing
+
+            todos.forEach(todo => {
+                const li = document.createElement("li");
+                li.textContent = `${todo.title} ${todo.completed ? '✅' : '❌'}`;
+                listElement.appendChild(li);
+            });
+        } catch (err) {
+            console.error("Error fetching todos:", err);
+        }
+    }
+
+    fetchTodos();
+</script>
+</body>
+</html>
